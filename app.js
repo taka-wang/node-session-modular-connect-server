@@ -1,3 +1,14 @@
+/**
+ * @fileoverview Connect server with client session. 
+ * You must have client-sessions and connect 1.x installed. 
+ * You can install the dependencies via npm install
+ * @author Taka Wang
+ */
+
+//------------------------------------------------------------------------------
+// Requirements
+//------------------------------------------------------------------------------
+
 var routeGet = require("./route/http_get.js"),
     routePost= require("./route/http_post.js"),
     h_utils  = require("./route/http_utils.js"),
@@ -7,6 +18,10 @@ var routeGet = require("./route/http_get.js"),
     connect  = require("connect"),
     server,
     logFile;
+
+//------------------------------------------------------------------------------
+// Server setup
+//------------------------------------------------------------------------------
 
 if (svrInfo.devmode) {                      // dev mode logger
     server  = connect.createServer().use(connect.logger('dev'));
