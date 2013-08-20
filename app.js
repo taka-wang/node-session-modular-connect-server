@@ -8,9 +8,9 @@ var routeGet = require("./route/http_get.js"),
     server,
     logFile;
 
-if (svrInfo.devmode) {
+if (svrInfo.devmode) { //dev mode logger
     server  = connect.createServer().use(connect.logger('dev'));
-} else {
+} else { //production mode logger, timestamp filename or fixed filename
     logFile = require("fs").createWriteStream(
         svrInfo.logfile || require("moment")().format("MM-DD-HH-mm-ss") + ".txt", 
         {flag: "w"}
@@ -35,7 +35,7 @@ server
             app.post(key, routePost.route[key]);
         }
     }))
-    .use(function(req, res, next) {         // auth check
+    .use(function(req, res, next) {         // auth check (multiple level supported)
         if (typeof req.session_state.username === "undefined") {
             if (req.url === "/login.html") {// serve login page if not authed
                 return next();              
@@ -62,8 +62,8 @@ server
     .use(function(err, req, res, next) {    //error handling
         res.end("Internal Server Error");
     })
-    .use(connect.favicon(__dirname + "/public/favicon.ico"))   //serve static files
-    .use(connect.static(__dirname + "/public/"))               //static files
+    .use(connect.favicon(__dirname + "/public/favicon.ico"))   //serve favicon
+    .use(connect.static(__dirname + "/public/"))               //serve static files
     .listen(svrInfo.port, svrInfo.ip);
 
 console.log("Server Listen: " + svrInfo.ip + ":" + svrInfo.port);
