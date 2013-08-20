@@ -82,6 +82,6 @@ server                                      // DO NOT RE-ORDER THE SEQUENCES!!
         res.writeHead(404, "Not found", {'Content-Type': 'text/html'});
         res.end('<html><head><title>404 - Not found</title></head><body><h1>404 Not found.</h1></body></html>');
     })
-    .listen(svrInfo.port, svrInfo.ip);
-
-console.log("Server Listen: " + svrInfo.ip + ":" + svrInfo.port);
+    .listen(svrInfo.port, svrInfo.ip, function(){
+        console.log("Port %s listening at %s", svrInfo.port, svrInfo.ip);
+    });
