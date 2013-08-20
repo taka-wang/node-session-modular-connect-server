@@ -8,9 +8,9 @@ var routeGet = require("./route/http_get.js"),
     server,
     logFile;
 
-if (svrInfo.devmode) {                      //dev mode logger
+if (svrInfo.devmode) {                      // dev mode logger
     server  = connect.createServer().use(connect.logger('dev'));
-} else {                                    //production mode logger, timestamp filename or fixed filename
+} else {                                    // production mode logger, timestamp filename or fixed filename
     logFile = require("fs").createWriteStream(
         svrInfo.logfile || require("moment")().format("MM-DD-HH-mm-ss") + ".txt", 
         {flag: "w"}
@@ -53,12 +53,12 @@ server                                      // DO NOT RE-ORDER THE SEQUENCES!!
             case "/login.html":             // redirect to authed entry when authed
                 h_utils.redirect(req, res, "/login");
                 break;
-            default:                        //serve static files
+            default:                        // serve static files
                 next();
             }  
         }
     })
-    .use(function(err, req, res, next) {    //error handling
+    .use(function(err, req, res, next) {    // error handling
         res.end("Internal Server Error");
     })
     .use(connect.favicon(__dirname + "/public/favicon.ico"))   //serve favicon
