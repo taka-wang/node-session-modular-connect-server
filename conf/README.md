@@ -1,10 +1,10 @@
 What's In
 ============
 1. `auth.json`
-session configuration
+Client-side session configuration file
 
 2. `passwd.json`
-Different user level
+Uses account infomation file
 
 3. `server.json`
-Server configuration
+connect server configuration file
