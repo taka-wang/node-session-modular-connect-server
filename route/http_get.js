@@ -11,4 +11,5 @@ function logout (req, res, next) {
 module.exports.route = 
 {
     "/logout" : logout
+    //more url/handler pairs
 };
