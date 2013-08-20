@@ -63,6 +63,10 @@ server                                      // DO NOT RE-ORDER THE SEQUENCES!!
     })
     .use(connect.favicon(__dirname + "/public/favicon.ico"))   //serve favicon
     .use(connect.static(__dirname + "/public/"))               //serve static files
+    .use(function(req, res, next) {                            //404
+        res.writeHead(404, "Not found", {'Content-Type': 'text/html'});
+        res.end('<html><head><title>404 - Not found</title></head><body><h1>404 Not found.</h1></body></html>');
+    })
     .listen(svrInfo.port, svrInfo.ip);
 
 console.log("Server Listen: " + svrInfo.ip + ":" + svrInfo.port);
