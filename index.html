@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Session-modular-connect-server : Modular restful server with session authentication" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Session-modular-connect-server</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/taka-wang/session-modular-connect-server">View on GitHub</a>
+
+          <h1 id="project_title">Session-modular-connect-server</h1>
+          <h2 id="project_tagline">Modular restful server with session authentication</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/taka-wang/session-modular-connect-server/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/taka-wang/session-modular-connect-server/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="modular-restful-server-with-authentication" class="anchor" href="#modular-restful-server-with-authentication"><span class="octicon octicon-link"></span></a>Modular restful server with authentication</h1>
+
+<h2>
+<a name="how-to-start" class="anchor" href="#how-to-start"><span class="octicon octicon-link"></span></a>How to start</h2>
+
+<ol>
+<li><code>git clone https://github.com/taka-wang/session-modular-connect-server.git</code></li>
+<li><code>npm install</code></li>
+<li>
+<code>npm start</code> or <code>node app.js</code>
+</li>
+<li>go to <code>http://127.0.0.1:3000</code>
+</li>
+</ol><h2>
+<a name="default-accounts" class="anchor" href="#default-accounts"><span class="octicon octicon-link"></span></a>Default accounts</h2>
+
+<ol>
+<li>account: <code>admin</code>, password: <code>1234</code>
+</li>
+<li>account: <code>user</code> , password: <code>1234</code>
+</li>
+<li>account: <code>guest</code>, password: <code>1234</code>
+</li>
+</ol><h2>
+<a name="how-to-extend" class="anchor" href="#how-to-extend"><span class="octicon octicon-link"></span></a>How to extend</h2>
+
+<ul>
+<li>In most case, you do not need to change the main.js file.</li>
+<li>Add your get/post handler in <code>route/http_get.js</code> or <code>route/http_post.js</code> respectively.</li>
+<li>You can also change your configuration from conf folder.</li>
+</ul><h2>
+<a name="why-connect-1x" class="anchor" href="#why-connect-1x"><span class="octicon octicon-link"></span></a>Why Connect 1.x</h2>
+
+<p>In short, it just fits (our restful server requirement).</p>
+
+<ul>
+<li>Why not express? 
+We need a thin skelton, not a railway framework</li>
+<li>Why not connect 2.x?
+We need <code>connect.router</code> function, no another small library dependency.</li>
+</ul><h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>MIT (c)Taka Wang 2013</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Session-modular-connect-server maintained by <a href="https://github.com/taka-wang">taka-wang</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
