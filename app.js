@@ -1,10 +1,10 @@
 var routeGet = require("./route/http_get.js"),
     routePost= require("./route/http_post.js"),
+    h_utils  = require("./route/http_utils.js"),
     authInfo = require("./conf/auth.json"),
     svrInfo  = require("./conf/server.json"),
     sessions = require("client-sessions"),
     connect  = require("connect"),
-    h_utils  = require("./route/http_utils.js"),
     server,
     logFile;
 
