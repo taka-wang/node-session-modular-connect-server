@@ -3,9 +3,19 @@ Modular restful server with authentication
 
 How to start
 ------
-`npm install`
+1. `git clone https://github.com/taka-wang/session-modular-connect-server.git`
 
-`npm start` or `node app.js`
+2. `npm install`
+
+3. `npm start` or `node app.js`
+
+4. go to `http://127.0.0.1:3000`
+
+Default accounts
+------
+1. account: `admin`, password: `1234`
+2. account: `user`,  password: `1234`
+3. account: `guest`, password: `1234`
 
 How to extend
 ------
