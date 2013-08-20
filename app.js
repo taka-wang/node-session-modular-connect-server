@@ -27,10 +27,10 @@ server
     }))
     .use(connect.router(function(app){
         var key;      
-        for (key in routeGet.route) {   // route http get
+        for (key in routeGet.route) {       // route http get
             app.get(key, routeGet.route[key]);
         }
-        for (key in routePost.route) {  // route http post
+        for (key in routePost.route) {      // route http post
             app.post(key, routePost.route[key]);
         }
     }))
