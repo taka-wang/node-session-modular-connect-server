@@ -18,7 +18,7 @@ if (svrInfo.devmode) {                      //dev mode logger
     server  = connect.createServer().use(connect.logger({stream: logFile, format: "tiny"})); 
 }
 
-server
+server                                      // DO NOT RE-ORDER THE SEQUENCES!!
     .use(connect.query())                   // query string handle
     .use(connect.bodyParser())              // post data handle
     .use(sessions({                         // session
@@ -36,21 +36,21 @@ server
     }))
     .use(function(req, res, next) {         // auth check (multiple levels supported)
         if (typeof req.session_state.username === "undefined") {
-            if (req.url === "/login.html") {// serve login page if not authed
+            if (req.url === "/login.html") {// serve login page when not authed
                 return next();              
-            } else {                        // redirect all to login.html page
+            } else {                        // redirect all to login.html page when not authed
                 h_utils.redirect(req, res, "/login.html");
             }
         } else {
             switch(req.url) {
-            case "/login":                  // authed entry
+            case "/login":                  // authed entry(pseudo url)
                 if (req.session_state.username === "admin") { //redirect for admin
                     h_utils.redirect(req, res, "/index.html");
-                } else {                    // redirect for user, guest
+                } else {                    // redirect for user, guest, you can rewrite this case
                     h_utils.writeHtml(res, "Welcome " + req.session_state.username + "! (<a href='/logout'>logout</a>)");
                 }
                 break;
-            case "/login.html":             // redirect to authed entry
+            case "/login.html":             // redirect to authed entry when authed
                 h_utils.redirect(req, res, "/login");
                 break;
             default:                        //serve static files
