@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    
+    <meta charset=utf-8 />
+    <meta name="author" content="Taka Wang">
+    <title>Welcome</title>
+    <link href="http://yui.yahooapis.com/pure/0.2.1/pure-min.css" rel="stylesheet" type="text/css" />
+    <style>
+    #login-div {
+        padding: 30px 30px;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    #login-form { 
+        text-align: left; 
+        display: inline-block; 
+        padding: 20px; 
+        width: auto;  
+        background: #FAFAFA;
+    }
+
+    </style>
+
+</head>
+<body>
+
+<div id="login-div">
+    <div id="login-form" class="pure-form pure-form-aligned">
+        <fieldset>
+            <legend>Demo Site</legend>
+            <div class="pure-control-group">
+                <label for="name">Username</label>
+                <input id="name" type="text" placeholder="admin">
+            </div>
+
+            <div class="pure-control-group">
+                <label for="password">Password</label>
+                <input id="password" type="password" placeholder="Password">
+            </div>
+
+            <div class="pure-controls">
+                <button class="pure-button pure-button-primary">Login</button>
+            </div>
+
+        </fieldset>
+    </div>
+</div>
+
+<script src="http://code.jquery.com/jquery.min.js"></script>
+
+<script>
+    $(".pure-button").click(function(){
+        $.ajax({
+            type: "POST",
+            url: "login",
+            data: {username: $("#name").val(), password: $("#password").val()},
+            success: function(data){
+                alert("Login successful!");
+                window.location.href = "/login";
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert("Login failed!");
+                console.log('error ' + textStatus + " " + errorThrown);
+                if (errorThrown === "Forbidden") {
+                    window.location.href = "/login.html"
+                }
+                
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
