@@ -8,9 +8,9 @@ var routeGet = require("./route/http_get.js"),
     server,
     logFile;
 
-if (svrInfo.devmode) { //dev mode logger
+if (svrInfo.devmode) {                      //dev mode logger
     server  = connect.createServer().use(connect.logger('dev'));
-} else { //production mode logger, timestamp filename or fixed filename
+} else {                                    //production mode logger, timestamp filename or fixed filename
     logFile = require("fs").createWriteStream(
         svrInfo.logfile || require("moment")().format("MM-DD-HH-mm-ss") + ".txt", 
         {flag: "w"}
@@ -25,17 +25,16 @@ server
         secret: authInfo.key,               // should be a large unguessable string
         duration: authInfo.duration * 1000, // how long the session will stay valid in ms
     }))
-    .use(connect.router(function(app){      // route http get
-        for (var key in routeGet.route) {
+    .use(connect.router(function(app){
+        var key;      
+        for (key in routeGet.route) {   // route http get
             app.get(key, routeGet.route[key]);
         }
-    }))
-    .use(connect.router(function(app){      // route http post
-        for (var key in routePost.route) {
+        for (key in routePost.route) {  // route http post
             app.post(key, routePost.route[key]);
         }
     }))
-    .use(function(req, res, next) {         // auth check (multiple level supported)
+    .use(function(req, res, next) {         // auth check (multiple levels supported)
         if (typeof req.session_state.username === "undefined") {
             if (req.url === "/login.html") {// serve login page if not authed
                 return next();              
