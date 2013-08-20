@@ -1,6 +1,13 @@
-modular connect server with client session authentication
+modular server with authentication
 ==============================
-`npm install`
-`npm start`
 
+How to start
+------
+`npm install`
+
+`npm start` or `node app.js`
+
+License
+------
+MIT
 
