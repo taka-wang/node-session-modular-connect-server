@@ -28,10 +28,10 @@ Why Connect 1.x
 In short, it just fits (our restful server requirement).
 
 - Why not express? 
-  We need a thin skelton, not a railway framework
+  We need a thin skelton, not a railway framework.
 
 - Why not connect 2.x?
-  We need `connect.router` function, no another small library dependency.
+  We need `connect.router` function, but keep other libraries dependency free.
 
 License
 ------
