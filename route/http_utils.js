@@ -8,7 +8,21 @@ var redirect = function(req, res, _url) { //help to redirect
     writeHtml = function(res, str) { //help to response simple html
         res.setHeader('Content-Type', 'text/html');
         res.end(str);
+    },
+    notFoundResp = function(_res) {
+        _res.statusCode = 404;
+        _res.end("File Not Found");
+    },
+    internelErrorResp = function(_res) {
+        _res.statusCode = 500;
+        _res.end("Internel Server Error");
+    },
+    jsonResp = function(_res, _data) {
+        _res.end(JSON.stringify(_data));
     };
 
-module.exports.redirect  = redirect;
-module.exports.writeHtml = writeHtml;
+module.exports.redirect          = redirect;
+module.exports.writeHtml         = writeHtml;
+module.exports.notFoundResp      = notFoundResp;
+module.exports.internelErrorResp = internelErrorResp;
+module.exports.jsonResp          = jsonResp;
