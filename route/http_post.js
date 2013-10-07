@@ -34,13 +34,13 @@ function upload(req, res, next) {
 
             fs.rename(oldPath, newPath, function (_err) {
                 if (_err) {
-                    httpUtils.notFoundResp(res);
+                    httpUtils.notFoundResp(res);        // 404 not found
                     throw _err;
                 }
 
                 fs.stat(newPath, function (_err, _stats) {
                     if (_err) {
-                        httpUtils.internelError(res);
+                        httpUtils.internelError(res);   // 500 internel server error
                         throw _err;
                     }
 
@@ -63,13 +63,13 @@ function upload(req, res, next) {
 
         fs.rename(oldPath, newPath, function (_err) {
             if (_err) {
-                httpUtils.notFoundResp(res);
+                httpUtils.notFoundResp(res);            // 404 not found
                 throw _err;
             }
 
             fs.stat(newPath, function (_err, _stats) {
                 if (_err) {
-                    httpUtils.internelErrorResp(res);
+                    httpUtils.internelErrorResp(res);   // 500 internel server error
                     throw _err;
                 }
                 jsonData.push(propObj);
