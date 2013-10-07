@@ -19,8 +19,6 @@ function upload(req, res, next) {
         imagesObj = req.files.images,
         uploadDir = path.dirname(__dirname) + "/uploads/";
 
-    res.setHeader("Content-Type", "application/json");
-
     // process multi files upload
     if (Array.isArray(imagesObj)) {
         var totalLength = imagesObj.length;
@@ -49,6 +47,7 @@ function upload(req, res, next) {
                     totalLength--;
 
                     if (!totalLength) {
+						res.setHeader("Content-Type", "application/json");
                         httpUtils.jsonResp(res, jsonData);
                     }
                 });
@@ -74,6 +73,7 @@ function upload(req, res, next) {
                     throw _err;
                 }
                 jsonData.push(propObj);
+				res.setHeader("Content-Type", "application/json");
                 httpUtils.jsonResp(res, jsonData);
             });
         });
