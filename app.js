@@ -27,21 +27,25 @@ if (svrInfo.devmode) {                      // dev mode logger
     server  = connect.createServer().use(connect.logger('dev'));
 } else {                                    // production mode logger, timestamp filename or fixed filename
     logFile = require("fs").createWriteStream(
-        svrInfo.logfile || require("moment")().format("MM-DD-HH-mm-ss") + ".txt", 
+        svrInfo.logfile || require("moment")().format("MM-DD-HH-mm-ss") + ".txt",
         {flag: "w"}
     );
-    server  = connect.createServer().use(connect.logger({stream: logFile, format: "tiny"})); 
+    server  = connect.createServer().use(connect.logger({stream: logFile, format: "tiny"}));
 }
 
 server                                      // DO NOT RE-ORDER THE SEQUENCES!!
     .use(connect.query())                   // query string handle
-    .use(connect.bodyParser())              // post data handle
+    .use(connect.bodyParser({
+        uploadDir : __dirname + '/uploads', // post data handle
+        keepExtensions:true,
+        defer : true
+    }))
     .use(sessions({                         // session
         secret: authInfo.key,               // should be a large unguessable string
         duration: authInfo.duration * 1000, // how long the session will stay valid in ms
     }))
     .use(connect.router(function(app){
-        var key;      
+        var key;
         for (key in routeGet.route) {       // route http get
             app.get(key, routeGet.route[key]);
         }
@@ -52,7 +56,7 @@ server                                      // DO NOT RE-ORDER THE SEQUENCES!!
     .use(function(req, res, next) {         // auth check (multiple levels supported)
         if (typeof req.session_state.username === "undefined") {
             if (req.url === "/login.html") {// serve login page when not authed
-                return next();              
+                return next();
             } else {                        // redirect all to login.html page when not authed
                 h_utils.redirect(req, res, "/login.html");
             }
@@ -70,7 +74,7 @@ server                                      // DO NOT RE-ORDER THE SEQUENCES!!
                 break;
             default:                        // serve static files
                 next();
-            }  
+            }
         }
     })
     .use(function(err, req, res, next) {    // error handling
@@ -85,3 +89,8 @@ server                                      // DO NOT RE-ORDER THE SEQUENCES!!
     .listen(svrInfo.port, svrInfo.ip, function(){
         console.log("Port %s listening at %s", svrInfo.port, svrInfo.ip);
     });
+
+// Handle exception otherwise node will crash when error occured
+process.on('uncaughtException', function(err) {
+    console.error(err.stack);
+});
