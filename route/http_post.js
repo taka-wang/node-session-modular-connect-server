@@ -1,7 +1,8 @@
 var passwd            = require("../conf/passwd.json"),
     httpUtils         = require("./http_utils.js"),
     path              = require("path"),
-    fs                = require("fs");
+    rename            = require("fs").rename,
+    stat              = require("fs").stat;
 
 function login(req, res, next) {
     if (passwd[req.body.username] === req.body.password) {
@@ -32,13 +33,13 @@ function upload(req, res, next) {
                     size : _image.size
                 };
 
-            fs.rename(oldPath, newPath, function (_err) {
+            rename(oldPath, newPath, function (_err) {
                 if (_err) {
                     httpUtils.notFoundResp(res);        // 404 not found
                     throw _err;
                 }
 
-                fs.stat(newPath, function (_err, _stats) {
+                stat(newPath, function (_err, _stats) {
                     if (_err) {
                         httpUtils.internelError(res);   // 500 internel server error
                         throw _err;
@@ -61,13 +62,13 @@ function upload(req, res, next) {
                 size : imagesObj.size
             };
 
-        fs.rename(oldPath, newPath, function (_err) {
+        rename(oldPath, newPath, function (_err) {
             if (_err) {
                 httpUtils.notFoundResp(res);            // 404 not found
                 throw _err;
             }
 
-            fs.stat(newPath, function (_err, _stats) {
+            stat(newPath, function (_err, _stats) {
                 if (_err) {
                     httpUtils.internelErrorResp(res);   // 500 internel server error
                     throw _err;
