@@ -1,8 +1,8 @@
-var passwd            = require("../conf/passwd.json"),
-    httpUtils         = require("./http_utils.js"),
-    path              = require("path"),
-    rename            = require("fs").rename,
-    stat              = require("fs").stat;
+var passwd      = require("../conf/passwd.json"),
+    httpUtils   = require("./http_utils.js"),
+    path        = require("path"),
+    rename      = require("fs").rename,
+    stat        = require("fs").stat;
 
 function login(req, res, next) {
     if (passwd[req.body.username] === req.body.password) {
@@ -81,7 +81,7 @@ function upload(req, res, next) {
 }
 
 module.exports.route = {
-    "/login": login,
-    "/upload": upload
+    "/login"   : login,
+    "/upload"  : upload
     //more url/handler pairs
 };
