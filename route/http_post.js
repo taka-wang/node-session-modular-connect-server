@@ -4,6 +4,12 @@ var passwd      = require("../conf/passwd.json"),
     rename      = require("fs").rename,
     stat        = require("fs").stat;
 
+module.exports.route = {
+    "/login"  : login,
+    "/upload" : upload
+    //more url/handler pairs
+};
+
 function login(req, res, next) {
     if (passwd[req.body.username] === req.body.password) {
         req.session_state.username = req.body.username;
@@ -79,9 +85,3 @@ function upload(req, res, next) {
         });
     }
 }
-
-module.exports.route = {
-    "/login"   : login,
-    "/upload"  : upload
-    //more url/handler pairs
-};

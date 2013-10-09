@@ -3,8 +3,8 @@ var passwd      = require("../conf/passwd.json"),
 	httpUtils   = require("./http_utils.js"),
 	fs          = require("fs"),
 	path        = require("path"),
-	mime		= require("mime"),
-	format		= require("util").format;
+	format      = require("util").format,
+	mime        = require("connect").static.mime;
 
 module.exports.route = {
 	"/logout"    : logout,
@@ -28,24 +28,24 @@ function logout(req, res, next) {
  * @param  {Function} next [description]
  */
 function download(req, res, next) {
-	var mimeType		= mime.lookup(req.params[0]),
-		downloadFile	= "./uploads/" + req.params[0],
-		strDisposition	= format("attachment; filename*=UTF-8''%s", path.basename(req.params[0]));
-
-	fs.exists(downloadFile, function (_exist) {
+	var	mimeType = mime.lookup(req.params[0]),
+		downloadFile = "./uploads/" + req.params[0],
+		strDisposition = format("attachment; filename*=UTF-8''%s", path.basename(req.params[0]));
+	
+	fs.exists(downloadFile, function(_exist) {
 		if (_exist) {
-			fs.readFile(downloadFile, function (err, data) {
+			fs.readFile(downloadFile, function(err, data) {
 				if (err) {
 					httpUtils.internelErrorResp(res);
 				} else {
-					fs.stat(downloadFile, function (err, stats) {
+					fs.stat(downloadFile, function(err, stats) {
 						if (err) {
 							httpUtils.internelErrorResp(res);
 						} else {
 							res.writeHead(200, {
-								"Content-Length"      : stats.size,
-								"Content-Type"        : mimeType,
-								"Content-Disposition" : strDisposition
+								"Content-Length": stats.size,
+								"Content-Type": mimeType,
+								"Content-Disposition": strDisposition
 							});
 							res.write(data);
 							res.end();
@@ -86,14 +86,14 @@ function list(req, res, next) {
 	var uploadDirName = "/uploads",
 		listDir = path.dirname(__dirname) + uploadDirName,
 		_filter = {
-			depth  : listSetting.depth,
-			hidden : listSetting.hidden,
-			root   : listDir
+			depth: listSetting.depth,
+			hidden: listSetting.hidden,
+			root: listDir
 		};
 
 	readDirectory(listDir, function(err, jsonData) {
 		if (err) {
-			httpUtils.internelError(res);   // 500 internel server error
+			httpUtils.internelError(res); // 500 internel server error
 			throw err;
 		} else {
 			setTimeout(function() {
@@ -110,7 +110,7 @@ function list(req, res, next) {
 	 * @return {[number]}         [current depth]
 	 */
 	function calcDepth(_rootDir, _curDir) {
-		var isWin   = !! process.platform.match(/^win/),
+		var isWin = !! process.platform.match(/^win/),
 			relPath = "/" + path.relative(_rootDir, _curDir);
 
 		if (isWin) {
