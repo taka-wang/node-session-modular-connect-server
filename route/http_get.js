@@ -2,12 +2,15 @@ var passwd      = require("../conf/passwd.json"),
 	listSetting = require("../conf/list.json"),
 	httpUtils   = require("./http_utils.js"),
 	fs          = require("fs"),
-	path        = require("path");
+	path        = require("path"),
+	mime		= require("mime"),
+	format		= require("util").format;
 
 module.exports.route = {
-	"/logout" : logout,
-	"/upload" : upload,
-	"/list"   : list
+	"/logout"    : logout,
+	"/upload"    : upload,
+	"/list"      : list,
+	"/uploads/*" : download
 	//more url/handler pairs
 };
 
@@ -16,6 +19,44 @@ function logout(req, res, next) {
 	console.log(user + " logout..");
 	req.session_state.reset();
 	httpUtils.redirect(req, res, "/login.html");
+}
+
+/**
+ * [File download handler]
+ * @param  {[object]}   req  [request object]
+ * @param  {[object]}   res  [response object]
+ * @param  {Function} next [description]
+ */
+function download(req, res, next) {
+	var mimeType		= mime.lookup(req.params[0]),
+		downloadFile	= "./uploads/" + req.params[0],
+		strDisposition	= format("attachment; filename*=UTF-8''%s", path.basename(req.params[0]));
+
+	fs.exists(downloadFile, function (_exist) {
+		if (_exist) {
+			fs.readFile(downloadFile, function (err, data) {
+				if (err) {
+					httpUtils.internelErrorResp(res);
+				} else {
+					fs.stat(downloadFile, function (err, stats) {
+						if (err) {
+							httpUtils.internelErrorResp(res);
+						} else {
+							res.writeHead(200, {
+								"Content-Length"      : stats.size,
+								"Content-Type"        : mimeType,
+								"Content-Disposition" : strDisposition
+							});
+							res.write(data);
+							res.end();
+						}
+					});
+				}
+			});
+		} else {
+			httpUtils.notFoundResp(res);
+		}
+	});
 }
 
 /**
@@ -45,9 +86,9 @@ function list(req, res, next) {
 	var uploadDirName = "/uploads",
 		listDir = path.dirname(__dirname) + uploadDirName,
 		_filter = {
-			depth: listSetting.depth,
-			hidden: listSetting.hidden,
-			root: listDir
+			depth  : listSetting.depth,
+			hidden : listSetting.hidden,
+			root   : listDir
 		};
 
 	readDirectory(listDir, function(err, jsonData) {
